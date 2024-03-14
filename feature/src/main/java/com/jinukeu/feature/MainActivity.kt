@@ -1,4 +1,4 @@
-package com.jinukeu.itbook
+package com.jinukeu.feature
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jinukeu.itbook.ui.theme.ItbookTheme
+import com.jinukeu.core.designsystem.theme.ItbookTheme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

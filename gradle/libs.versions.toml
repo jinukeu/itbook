@@ -24,7 +24,7 @@ kotlinx-datetime = "0.4.1"
 kotlinx-immutable = "0.3.6"
 
 ktlint = "11.5.1"
-detekt = "1.23.5"
+detekt = "1.23.1"
 
 retrofit = "2.9.0"
 retrofit-kotlinx-serialization-json = "1.0.0"

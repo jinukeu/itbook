@@ -16,6 +16,10 @@ internal class MainNavigator(
 
   val startDestination = MainRoute.homeRoute
 
+  fun navigateBookDetail(isbn13: String) {
+    navController.navigate(MainRoute.bookDetailRoute(isbn13))
+  }
+
   fun popBackStackIfNotHome() {
     if (!isSameCurrentDestination(MainRoute.homeRoute)) {
       navController.popBackStack()

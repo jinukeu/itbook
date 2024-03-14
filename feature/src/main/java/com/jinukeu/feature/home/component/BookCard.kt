@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jinukeu.core.designsystem.theme.ItbookTheme
+import com.jinukeu.core.ui.extension.itbookClickable
 import com.jinukeu.feature.home.HomeBookListViewType
 
 @Composable
@@ -29,6 +30,7 @@ fun BookCard(
   title: String,
   subTitle: String,
   price: String,
+  onClick: () -> Unit = {},
 ) {
   when (type) {
     HomeBookListViewType.LIST -> BookCardListType(
@@ -36,6 +38,7 @@ fun BookCard(
       title = title,
       subTitle = subTitle,
       price = price,
+      onClick = onClick,
     )
 
     HomeBookListViewType.GRID -> BookCardGridType(
@@ -43,6 +46,7 @@ fun BookCard(
       title = title,
       subTitle = subTitle,
       price = price,
+      onClick = onClick,
     )
   }
 }
@@ -57,9 +61,11 @@ private fun BookCardListType(
   title: String,
   subTitle: String,
   price: String,
+  onClick: () -> Unit = {},
 ) {
   Row(
     modifier = Modifier
+      .itbookClickable(onClick = onClick)
       .height(100.dp)
       .border(width = 1.dp, color = Color.Gray)
       .padding(8.dp),
@@ -116,9 +122,11 @@ private fun BookCardGridType(
   title: String,
   subTitle: String,
   price: String,
+  onClick: () -> Unit = {},
 ) {
   Column(
     modifier = Modifier
+      .itbookClickable(onClick = onClick)
       .fillMaxWidth()
       .border(width = 1.dp, color = Color.Gray)
       .padding(8.dp),

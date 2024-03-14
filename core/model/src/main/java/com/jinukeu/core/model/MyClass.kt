@@ -1,4 +1,3 @@
 package com.jinukeu.core.model
 
-class MyClass {
-}
+class MyClass

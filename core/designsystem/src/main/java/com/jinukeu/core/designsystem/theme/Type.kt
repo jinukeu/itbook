@@ -1,4 +1,4 @@
-package com.jinukeu.itbook.ui.theme
+package com.jinukeu.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

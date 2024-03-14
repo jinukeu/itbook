@@ -60,7 +60,7 @@ private fun BookCardListType(
 ) {
   Row(
     modifier = Modifier
-      .height(80.dp)
+      .height(100.dp)
       .border(width = 1.dp, color = Color.Gray)
       .padding(8.dp),
     verticalAlignment = Alignment.CenterVertically,
@@ -68,7 +68,7 @@ private fun BookCardListType(
   ) {
     AsyncImage(
       modifier = Modifier
-        .size(60.dp),
+        .size(80.dp),
       model = imageUrl,
       contentScale = ContentScale.Crop,
       contentDescription = null,
@@ -126,7 +126,7 @@ private fun BookCardGridType(
   ) {
     AsyncImage(
       modifier = Modifier
-        .size(60.dp),
+        .size(120.dp),
       model = imageUrl,
       contentScale = ContentScale.Crop,
       contentDescription = null,

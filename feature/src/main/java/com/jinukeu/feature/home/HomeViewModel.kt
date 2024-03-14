@@ -8,6 +8,7 @@ import com.jinukeu.domain.usecase.SearchBookListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -25,6 +26,11 @@ class HomeViewModel @Inject constructor(
     this.query = query
 
     getBookList(needClear = true)
+  }
+
+  fun refreshBookList(onFinish: () -> Unit = {}) = viewModelScope.launch {
+    getBookList(true).join()
+    onFinish()
   }
 
   fun getBookList(needClear: Boolean = false) = viewModelScope.launch {

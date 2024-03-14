@@ -2,12 +2,13 @@ package com.jinukeu.remote.response
 
 import com.jinukeu.core.model.Book
 import com.jinukeu.core.model.BookCollection
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class BookListResponse(
   val total: String,
-  val bookList: List<BookResponse>,
+  @SerialName("books") val bookList: List<BookResponse>,
 ) {
   fun toModel() = BookCollection(
     total = total.toLongOrNull() ?: 0L,

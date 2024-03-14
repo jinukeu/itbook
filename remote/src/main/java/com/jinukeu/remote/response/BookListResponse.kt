@@ -23,7 +23,6 @@ data class BookResponse(
   val isbn13: String,
   val price: String,
   val image: String,
-  val url: String,
 ) {
   fun toModel() = Book(
     title = title,
@@ -31,6 +30,5 @@ data class BookResponse(
     isbn13 = isbn13,
     price = price,
     image = image,
-    url = url,
   )
 }

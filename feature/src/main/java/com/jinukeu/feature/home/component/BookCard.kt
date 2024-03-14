@@ -14,21 +14,53 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.jinukeu.core.designsystem.theme.ItbookTheme
+import com.jinukeu.feature.home.HomeBookListViewType
+
+@Composable
+fun BookCard(
+  type: HomeBookListViewType,
+  imageUrl: String,
+  title: String,
+  subTitle: String,
+  price: String,
+) {
+  when (type) {
+    HomeBookListViewType.LIST -> BookCardListType(
+      imageUrl = imageUrl,
+      title = title,
+      subTitle = subTitle,
+      price = price,
+    )
+
+    HomeBookListViewType.GRID -> BookCardGridType(
+      imageUrl = imageUrl,
+      title = title,
+      subTitle = subTitle,
+      price = price,
+    )
+  }
+}
 
 /**
  * 내부에 존재하는 각각의 Text Component는 향후 개별적으로 다른 디자인이 적용될 가능성이 큽니다.
  * 따라서 공통 컴포넌트로 만들지 않았습니다.
  * */
 @Composable
-fun BookCardListType() {
+private fun BookCardListType(
+  imageUrl: String,
+  title: String,
+  subTitle: String,
+  price: String,
+) {
   Row(
     modifier = Modifier
-      .height(80.dp)
+      .height(100.dp)
       .border(width = 1.dp, color = Color.Gray)
       .padding(8.dp),
     verticalAlignment = Alignment.CenterVertically,
@@ -36,8 +68,9 @@ fun BookCardListType() {
   ) {
     AsyncImage(
       modifier = Modifier
-        .size(60.dp),
-      model = "",
+        .size(80.dp),
+      model = imageUrl,
+      contentScale = ContentScale.Crop,
       contentDescription = null,
     )
 
@@ -47,7 +80,7 @@ fun BookCardListType() {
       verticalArrangement = Arrangement.SpaceBetween,
     ) {
       Text(
-        text = "TitleTitleTitleTitleTitleTitleTitleTitleTitleTitle",
+        text = title,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
       )
@@ -58,13 +91,13 @@ fun BookCardListType() {
       ) {
         Text(
           modifier = Modifier.weight(1f, fill = false),
-          text = "SubTitleSubTitleSubTitleSubTitleSubTitleSubTitleSubTitleSubTitle",
+          text = subTitle,
           maxLines = 1,
           overflow = TextOverflow.Ellipsis,
         )
         Text(
           modifier = Modifier.weight(1f, fill = false),
-          text = "pricepricepricepricepricepriceprice",
+          text = price,
           maxLines = 1,
           overflow = TextOverflow.Ellipsis,
         )
@@ -78,7 +111,12 @@ fun BookCardListType() {
  * 따라서 공통 컴포넌트로 만들지 않았습니다.
  * */
 @Composable
-fun BookCardGridType() {
+private fun BookCardGridType(
+  imageUrl: String,
+  title: String,
+  subTitle: String,
+  price: String,
+) {
   Column(
     modifier = Modifier
       .fillMaxWidth()
@@ -88,25 +126,26 @@ fun BookCardGridType() {
   ) {
     AsyncImage(
       modifier = Modifier
-        .size(60.dp),
-      model = "",
+        .size(120.dp),
+      model = imageUrl,
+      contentScale = ContentScale.Crop,
       contentDescription = null,
     )
 
     Text(
-      text = "TitleTitleTitleTitleTitleTitleTitleTitleTitleTitle",
+      text = title,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
     )
 
     Text(
-      text = "SubTitleSubTitleSubTitleSubTitleSubTitleSubTitleSubTitleSubTitle",
+      text = subTitle,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
     )
 
     Text(
-      text = "pricepricepricepricepricepriceprice",
+      text = price,
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
     )
@@ -120,9 +159,15 @@ fun BookCardPreview() {
     Column(
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      BookCardGridType()
-
-      BookCardListType()
+      HomeBookListViewType.entries.forEach { type ->
+        BookCard(
+          type = type,
+          imageUrl = "Nyree",
+          title = "Sylvan",
+          subTitle = "Margery",
+          price = "Dandrea",
+        )
+      }
     }
   }
 }

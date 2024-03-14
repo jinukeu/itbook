@@ -1,14 +1,13 @@
 package com.jinukeu.core.model
 
-import kotlinx.serialization.Serializable
+import androidx.compose.runtime.Stable
 
-@Serializable
 data class BookCollection(
   val total: Long,
   val bookList: List<Book>,
 )
 
-@Serializable
+@Stable
 data class Book(
   val title: String,
   val subtitle: String,

@@ -91,7 +91,7 @@ fun HomeScreen(
     modifier = Modifier
       .padding(padding)
       .fillMaxSize()
-      .nestedScroll(refreshState.nestedScrollConnection)
+      .nestedScroll(refreshState.nestedScrollConnection),
   ) {
     Column(
       modifier = Modifier

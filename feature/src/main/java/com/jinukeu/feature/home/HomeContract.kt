@@ -9,6 +9,7 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 
 data class HomeState(
+  val showLoadingScreen: Boolean = true,
   val showSearchBar: Boolean = false,
   val homeBookListViewType: HomeBookListViewType = HomeBookListViewType.LIST,
   val searchKeyword: String = "",
@@ -29,4 +30,5 @@ enum class HomeBookListViewType(val cellCount: Int) {
 
 sealed interface HomeSideEffect : SideEffect {
   data class NavigateBookDetail(val isbn13: String) : HomeSideEffect
+  data class ShowErrorSnackBar(val throwable: Throwable, val retry: (() -> Unit)? = null) : HomeSideEffect
 }

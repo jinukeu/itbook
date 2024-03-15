@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.jinukeu.core.designsystem.component.LoadingScreen
 import com.jinukeu.core.designsystem.theme.ItbookTheme
 import com.jinukeu.core.ui.extension.OnBottomReached
 import com.jinukeu.core.ui.extension.collectWithLifecycle
@@ -42,6 +43,7 @@ fun HomeRoute(
   viewModel: HomeViewModel = hiltViewModel(),
   padding: PaddingValues,
   navigateBookDetail: (String) -> Unit,
+  onShowErrorSnackBar: (throwable: Throwable?, retry: (() -> Unit)?) -> Unit,
 ) {
   val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
@@ -51,6 +53,7 @@ fun HomeRoute(
   viewModel.sideEffect.collectWithLifecycle { sideEffect ->
     when (sideEffect) {
       is HomeSideEffect.NavigateBookDetail -> navigateBookDetail(sideEffect.isbn13)
+      is HomeSideEffect.ShowErrorSnackBar -> onShowErrorSnackBar(sideEffect.throwable, sideEffect.retry)
     }
   }
 
@@ -168,6 +171,10 @@ fun HomeScreen(
       modifier = Modifier.align(Alignment.TopCenter),
       state = refreshState,
     )
+
+    if (uiState.showLoadingScreen && refreshState.isRefreshing.not()) {
+      LoadingScreen()
+    }
   }
 }
 

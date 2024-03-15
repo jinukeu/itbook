@@ -19,7 +19,12 @@ class BookDetailViewModel @Inject constructor(
   private val isbn13 = savedStateHandle.get<String>(MainRoute.BOOK_DETAIL_ARGUMENT)!!
 
   fun initData() = viewModelScope.launch {
+    intent { copy(showLoadingScreen = true) }
     getBookDetailUseCase(isbn13 = isbn13)
       .onSuccess { intent { copy(bookDetail = it) } }
+      .onFailure { throwable ->
+        postSideEffect(BookDetailSideEffect.ShowErrorSnackBar(throwable, ::initData))
+      }
+    intent { copy(showLoadingScreen = false) }
   }
 }

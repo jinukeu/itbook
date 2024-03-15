@@ -41,6 +41,7 @@ import com.jinukeu.feature.home.component.SearchBar
 fun HomeRoute(
   viewModel: HomeViewModel = hiltViewModel(),
   padding: PaddingValues,
+  navigateBookDetail: (String) -> Unit,
 ) {
   val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
@@ -48,7 +49,9 @@ fun HomeRoute(
   val refreshState = rememberPullToRefreshState()
 
   viewModel.sideEffect.collectWithLifecycle { sideEffect ->
-    // TODO
+    when (sideEffect) {
+      is HomeSideEffect.NavigateBookDetail -> navigateBookDetail(sideEffect.isbn13)
+    }
   }
 
   LaunchedEffect(key1 = refreshState.isRefreshing) {
@@ -72,6 +75,7 @@ fun HomeRoute(
     onClickShowSearchBarButton = viewModel::showSearchBar,
     onValueChangeSearchKeyword = viewModel::updateSearchKeyword,
     onSearch = viewModel::searchBookList,
+    onClickBookCard = viewModel::navigateBookDetail,
   )
 }
 
@@ -86,6 +90,7 @@ fun HomeScreen(
   onClickShowSearchBarButton: () -> Unit = {},
   onValueChangeSearchKeyword: (String) -> Unit = {},
   onSearch: (String) -> Unit = {},
+  onClickBookCard: (String) -> Unit = {},
 ) {
   Box(
     modifier = Modifier
@@ -152,6 +157,7 @@ fun HomeScreen(
               title = title,
               subTitle = subtitle,
               price = price,
+              onClick = { onClickBookCard(isbn13) },
             )
           }
         }

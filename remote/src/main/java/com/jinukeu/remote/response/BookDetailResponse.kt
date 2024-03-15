@@ -19,7 +19,7 @@ data class BookDetailResponse(
   val price: String,
   val image: String,
   val url: String,
-  val pdf: Map<String, String>,
+  val pdf: Map<String, String> = mapOf(),
 ) {
   fun toModel() = BookDetail(
     title = title,

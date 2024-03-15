@@ -30,9 +30,7 @@ internal fun MainScreen(
         composable(
           route = MainRoute.bookDetailRoute("{${MainRoute.BOOK_DETAIL_ARGUMENT}}"),
         ) {
-          BookDetailRoute(
-            popBackStack = navigator::popBackStackIfNotHome,
-          )
+          BookDetailRoute()
         }
       }
     },

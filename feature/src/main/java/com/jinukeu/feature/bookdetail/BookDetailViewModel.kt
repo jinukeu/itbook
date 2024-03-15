@@ -22,6 +22,4 @@ class BookDetailViewModel @Inject constructor(
     getBookDetailUseCase(isbn13 = isbn13)
       .onSuccess { intent { copy(bookDetail = it) } }
   }
-
-  fun popBackStack() = postSideEffect(BookDetailSideEffect.PopBackStack)
 }

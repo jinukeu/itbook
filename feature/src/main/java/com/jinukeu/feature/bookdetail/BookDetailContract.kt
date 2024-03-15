@@ -8,6 +8,4 @@ data class BookDetailState(
   val bookDetail: BookDetail = BookDetail(),
 ) : UiState
 
-sealed interface BookDetailSideEffect : SideEffect {
-  data object PopBackStack : BookDetailSideEffect
-}
+sealed interface BookDetailSideEffect : SideEffect

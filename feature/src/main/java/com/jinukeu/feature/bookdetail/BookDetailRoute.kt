@@ -21,13 +21,22 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.jinukeu.core.designsystem.component.LoadingScreen
 import com.jinukeu.core.designsystem.theme.ItbookTheme
+import com.jinukeu.core.ui.extension.collectWithLifecycle
 
 @Composable
 fun BookDetailRoute(
   viewModel: BookDetailViewModel = hiltViewModel(),
+  onShowErrorSnackBar: (throwable: Throwable?, retry: (() -> Unit)?) -> Unit,
 ) {
   val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+
+  viewModel.sideEffect.collectWithLifecycle { sideEffect ->
+    when (sideEffect) {
+      is BookDetailSideEffect.ShowErrorSnackBar -> onShowErrorSnackBar(sideEffect.throwable, sideEffect.retry)
+    }
+  }
 
   LaunchedEffect(key1 = Unit) {
     viewModel.initData()
@@ -101,6 +110,10 @@ fun BookDetailScreen(
           )
         }
       }
+    }
+
+    if (uiState.showLoadingScreen) {
+      LoadingScreen()
     }
   }
 }

@@ -8,6 +8,7 @@ import com.jinukeu.domain.usecase.SearchBookListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class HomeViewModel @Inject constructor(
     onFinish()
   }
 
-  fun getBookList(needClear: Boolean = false) = viewModelScope.launch {
+  fun getBookList(needClear: Boolean = false): Job = viewModelScope.launch {
     val currentList = if (needClear) {
       page = FIRST_PAGE
       isLast = false
@@ -42,12 +43,23 @@ class HomeViewModel @Inject constructor(
 
     if (isLast) return@launch
 
+    intent { copy(showLoadingScreen = true) }
+
     searchBookListUseCase(
       query = query,
       page = page,
     ).onSuccess { response ->
       handleHomeUnsplashPhotoSuccess(response, currentList)
+    }.onFailure { throwable ->
+      postSideEffect(
+        HomeSideEffect.ShowErrorSnackBar(
+          throwable = throwable,
+          retry = { getBookList(needClear) },
+        ),
+      )
     }
+
+    intent { copy(showLoadingScreen = false) }
   }
 
   private fun handleHomeUnsplashPhotoSuccess(
